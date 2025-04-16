@@ -1,0 +1,49 @@
+
+form{
+    display:flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
+
+h1{
+    color: #ffb4b4;
+}
+
+input.input{
+    width: 30vw;
+    height: 30px;
+    border: solid 2px #ffb4b4;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+input[type=file]{
+    display: none;
+}
+
+label.input-file{
+    margin: 10px;
+    border: solid 2px #ffb4b4;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1.2em;
+}
+
+button.cadastrar{
+    border: none;
+    background-color: #ffb4b4;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1.2em;
+    color: #fff;
+    margin: 20px;
+}
+
+@media(max-width: 700px){
+    input.input{
+        width: 300px;
+    }
+}
