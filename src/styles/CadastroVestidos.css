@@ -30,6 +30,7 @@ label.input-file{
     padding: 10px 20px;
     border-radius: 30px;
     font-size: 1.2em;
+    cursor: pointer;
 }
 
 button.cadastrar{
