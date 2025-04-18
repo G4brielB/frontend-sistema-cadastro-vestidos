@@ -23,7 +23,7 @@ export default props => {
     return(
         <div>
             <header>
-                <Link className="link" to={"/cadastro-vestidos"}>+ Cadastrar Vestido</Link>
+                <Link className="link-cadastro" to={"/cadastro-vestidos"}>+ Cadastrar Vestido</Link>
             </header>
             <section>
                 <table>

@@ -1,14 +1,37 @@
+*{
+    box-sizing: border-box;
+}
+
 header{
     display: flex;
     width: 100vw;
     justify-content:flex-end;
 }
 
-.link{
+.link-cadastro{
     padding: 20px;
     margin: 30px;
     text-decoration: none;
     background-color: #ffb4b4;
     color: #fff;
     font-size: 1.2em;
+    border-radius: 30px;
+}
+
+table{
+    width: 100%;
+    border: solid 2px #ffb4b4;
+    padding: 20px;
+}
+
+th{
+    background-color: #ffdddd;
+    padding: 10px 20px;
+    font-size: 1.2em;
+}
+
+td{
+    background-color: #ddd;
+    padding: 10px;
+    font-size: 1.0em;
 }
