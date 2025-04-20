@@ -1,5 +1,6 @@
 import "../styles/CadastroVestidos.css"
 import { Link } from "react-router-dom"
+import { cadastrarVestido } from '../api/Api'
 
 export default props => {
 

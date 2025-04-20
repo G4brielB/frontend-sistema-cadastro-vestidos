@@ -1,9 +1,26 @@
-import { Link } from "react-router-dom"
-import "../styles/TelaInicial.css"
+import { Link } from "react-router-dom";
+import "../styles/TelaInicial.css";
+import {buscarDados} from "../api/Api";
+import {useState, useEffect} from 'react';
 
 
 
 export default props => {
+
+    const [dados, setDados] = useState([]);
+
+    useEffect(() => {
+        async function carregarDados(){
+            try{
+                const response = await buscarDados();
+                setDados(response.data);
+                console.log(response.data)
+            }catch(erro){
+                console.log(erro);
+            }
+        };
+        carregarDados();
+    },[])
 
     const vestidos = [{
         codVestido: "3301",
@@ -18,8 +35,6 @@ export default props => {
         tamanho: "g"
     }]
 
-    console.log(vestidos.map((user) => user.nome  ))
-
     return(
         <div>
             <header>
@@ -31,17 +46,17 @@ export default props => {
                         <th>Codigo do vestido:</th>
                         <th>imagem:</th>
                         <th>nome:</th>
-                        <th>Tamanho:</th>
+                        
                     </tr>
 
 
-                    {vestidos.map((user) => {
+                    {dados.map((user) => {
                         return(
-                            <tr Key={user.codVestido}>
-                                <td>{user.codVestido}</td>
+                            <tr Key={user.cod_vestido}>
+                                <td>{user.cod_vestido}</td>
                                 <td>{user.imagem}</td>
-                                <td>{user.nome}</td>
-                                <td>{user.tamanho}</td>
+                                <td>{user.nome_vestido}</td>
+                                
                                 <td><button>Alugar</button></td>
                             </tr>
                         )
