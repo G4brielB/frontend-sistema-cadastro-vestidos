@@ -7,34 +7,28 @@ import {useState, useEffect} from 'react';
 
 export default props => {
 
-    const [dados, setDados] = useState([]);
+    const [vestidos, setVestidos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function carregarDados(){
+        async function carregarVestidos(){
             try{
-                const response = await buscarDados();
-                setDados(response.data);
-                console.log(response.data)
+                const dados = await buscarDados()
+                setVestidos(dados)
             }catch(erro){
-                console.log(erro);
+                setError(erro.message)
+            } finally {
+                setLoading(false)
             }
-        };
-        carregarDados();
-    },[])
+        }
+        carregarVestidos()
+    },[]) 
 
-    const vestidos = [{
-        codVestido: "3301",
-        imagem: "img1",
-        nome: "vestido princesa infantil",
-        tamanho: "m"
-    },
-    {
-        codVestido: "3302",
-        imagem: "img2",
-        nome: "vestido Stitch",
-        tamanho: "g"
-    }]
+    if (loading) return(<div>Carregando...</div>)
+    if (error) return(<div>Erro: {error}</div>)
 
+        console.log(vestidos)
     return(
         <div>
             <header>
@@ -50,17 +44,17 @@ export default props => {
                     </tr>
 
 
-                    {dados.map((user) => {
+                    {vestidos.map((vestido) => {
                         return(
-                            <tr Key={user.cod_vestido}>
-                                <td>{user.cod_vestido}</td>
-                                <td>{user.imagem}</td>
-                                <td>{user.nome_vestido}</td>
+                            <tr Key={vestido.id_vestido}>
+                                <td>{vestido.cod_vestido}</td>
+                                <td>{vestido.imagem}</td>
+                                <td>{vestido.nome_vestido}</td>
                                 
                                 <td><button>Alugar</button></td>
                             </tr>
                         )
-                    })}
+                    })} 
                 
                 </table>
             </section>
