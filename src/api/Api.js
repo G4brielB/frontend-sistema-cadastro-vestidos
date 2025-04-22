@@ -20,6 +20,7 @@ export  const cadastrarVestido = async (dados) => {
 export const buscarDados = async () => {
     try{
         const response = await axios.get('http://localhost:3001/vestidos');
+        console.log(response)
         return response.data.data
     }catch(erro){
         console.log('Erro ao listar vestidos: ', erro)

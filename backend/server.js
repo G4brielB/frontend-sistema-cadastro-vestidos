@@ -12,7 +12,7 @@ app.use(fileupload())
 
 app.use(cors({
     origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type']
 }))
 
@@ -28,8 +28,6 @@ conexao.connect((erro) => {
     console.log("conectado com sucesso!")
 });
 
-
-let vestidos = []
 
 
 app.post('/vestidos' , (req, res) => {
@@ -90,9 +88,12 @@ app.post('/vestidos' , (req, res) => {
         }
 }) 
 
-app.get('/vestidos', (req,res) => {
+const promiseConnection = conexao.promise();
+
+app.get('/vestidos', async (req,res) => {
     try{
-        const {vestidos} = conexao.query('SELECT * FROM vestido.info_vestidos');
+        const [vestidos] = await promiseConnection.query('SELECT * FROM vestido.info_vestidos');
+
         res.json({
             success: true,
             data: vestidos
