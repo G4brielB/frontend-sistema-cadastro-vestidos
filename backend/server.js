@@ -1,14 +1,21 @@
 import express from 'express';
 import cors from 'cors';
 import mysql from "mysql2";
-import fileupload from "express-fileupload"
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fileUpload from 'express-fileupload'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname =  path.dirname(__filename)
 
 
 const port = 3001;
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
-app.use(fileupload())
+app.use(fileUpload())
+app.use('/images', express.static(path.join(__dirname, '/images')))
 
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -29,19 +36,33 @@ conexao.connect((erro) => {
 });
 
 
+/*
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../src/images'))
+    },
+    filename: (req, file, cb) => {
+        const filename = Date.now() + path.extname(file.originalname)
+        cb(null, filename)
+    }
+})
 
-app.post('/vestidos' , (req, res) => {
+const upload = multer ({ storage: storage})
+*/
+
+app.post('/vestidos'/*, upload.single('imagem') */, (req, res) => {
 
     try{
         const { cod_vestido , nome_vestido} = req.body;
-        const imagem = req.files?.imagem;
+        const imagem = req.files.imagem
 
         if (!cod_vestido || !nome_vestido) {
             return res.status(400).json({erro: "Codigo e nome são obrigatorios"});
         }
 
-        if(imagem){
-            req.files.imagem.mv(__dirname+'/imagens/'+req.files.imagem.name);
+        if(file){
+            req.files.imagem.mv(__dirname+'../src/imagens/'+req.files.imagem.name);
+
 
             if(err) {
                 console.error('Erro ao salvar imagem: ', err);
@@ -50,9 +71,11 @@ app.post('/vestidos' , (req, res) => {
         
 
     
-            let sql = `INSERT INTO vestido.info_vestidos (cod_vestido, nome_vestido, imagem) VALUES ('${cod_vestido}', '${nome_vestido}','${imagem.name}')`;
+            //let sql = `INSERT INTO vestido.info_vestidos (cod_vestido, nome_vestido, imagem) VALUES ('${cod_vestido}', '${nome_vestido}','${file.filename}')`;
+
+            let sql = `INSERT INTO vestido.info_vestidos (cod_vestido, nome_vestido, imagem) VALUES (?, ?, ?)`;
     
-            conexao.query(sql, (erro, resultado) => {        
+            conexao.query(sql, [cod_vestido, nome_vestido, imagem.name] ,(erro, resultado) => {        
                 if(erro) {
                     console.error('Erro no MySQL: ', erro);
                     return res.status(500).json({ error: "Erro no servidor "});

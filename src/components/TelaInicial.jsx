@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "../styles/TelaInicial.css";
 import {buscarDados} from "../api/Api";
 import {useState, useEffect} from 'react';
+import AlugarVestido from "./AlugarVestido";
 
 
 
@@ -25,12 +26,12 @@ export default props => {
         carregarVestidos()
     },[]) 
 
-    if (loading) return(<div>Carregando...</div>)
-    if (error) return(<div>Erro: {error}</div>)
+    //if (loading) return(<div>Carregando...</div>)
+    //if (error) return(<div>Erro: {error}</div>)
 
-        console.log(vestidos)
     return(
         <div>
+            <AlugarVestido />
             <header>
                 <Link className="link-cadastro" to={"/cadastro-vestidos"}>+ Cadastrar Vestido</Link>
             </header>

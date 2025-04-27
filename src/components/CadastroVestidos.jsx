@@ -52,7 +52,7 @@ export default props => {
         <div className="cadastro">
             <Link className="link" to={"/"}>Inicio</Link>
             <div className="tela-cadastro">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="form-cadastro">
                     <h1>Cadastro de Vestidos</h1>
 
                     <input
@@ -77,7 +77,7 @@ export default props => {
                         name="imagem" 
                         onChange={handleChange}
                         accept="image/*"/>
-                    </label>
+                    </label> 
                     <button type="submit" className="cadastrar">Cadastrar</button>
                 </form>
             </div>

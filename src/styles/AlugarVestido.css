@@ -1,0 +1,41 @@
+div.container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+}
+
+div.janela-flutuante{
+    background-color: #fff;
+    width: 80vw;
+    height: 80vh;
+    border: solid 2px #000 ;
+    padding: 20px;
+    font-size: 1.5em;
+}
+
+form.form-data{
+    display: flex;
+    flex-direction: column;
+}
+
+input.input-data{
+    width: 300px;
+    margin: 20px;
+}
+
+button.btn-aluguel{
+    width: 200px;
+    height: 50px;
+    align-self: center;
+    border-radius: 30px;
+    border: none;
+    background-color: #ffb4b4;
+    margin-top: 20px;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+}
