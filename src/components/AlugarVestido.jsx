@@ -6,7 +6,9 @@ export default ({mostrar}, ...props) => {
         mostrar = null
     }
     
-    if(mostrar != null){
+    if(!mostrar) return null
+
+
         return(
             <div className="container">
                 <div className="janela-flutuante">
@@ -17,11 +19,29 @@ export default ({mostrar}, ...props) => {
                     <p>Codigo do vestido: {}</p>
 
                     <form className="form-data">
+
+                        <label >
+                            Nome cliente: 
+                            <input type="text"
+                                    className="input" />
+                        </label>
+                        <br />
+                        <label>
+                            Endereço: 
+                            <input type="text" 
+                                    className="input"/>
+                        </label>
+                        <br />
+                        <label>
+                            Telefone:
+                            <input type="text" 
+                                    className="input" />
+                        </label>
                         <label className="label-data">
                         Data de entrega do vestido:
                             <input type="date" 
                             name="data_entrega"
-                            className="input-data"
+                            className="input-data input"
                             />
                         </label>
                         <br />
@@ -29,7 +49,7 @@ export default ({mostrar}, ...props) => {
                         Data de devolução do vestido:
                             <input type="date" 
                             name="data_devolucao"
-                            className="input-data"
+                            className="input-data input"
                             />
                         </label>
                         <button
@@ -42,5 +62,5 @@ export default ({mostrar}, ...props) => {
                 </div>
             </div>
         )
-    }
+    
 }

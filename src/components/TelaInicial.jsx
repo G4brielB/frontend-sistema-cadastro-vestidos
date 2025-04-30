@@ -8,6 +8,8 @@ import AlugarVestido from "./AlugarVestido";
 
 export default props => {
 
+
+    const [mostrarAluguel, setMostrarAluguel] = useState(null)
     const [vestidos, setVestidos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -29,9 +31,13 @@ export default props => {
     //if (loading) return(<div>Carregando...</div>)
     //if (error) return(<div>Erro: {error}</div>)
 
+    const funcMostrarAluguel = () => {
+        setMostrarAluguel(true)
+    }
+
     return(
         <div>
-            <AlugarVestido />
+            <AlugarVestido mostrar={mostrarAluguel} />
             <header>
                 <Link className="link-cadastro" to={"/cadastro-vestidos"}>+ Cadastrar Vestido</Link>
             </header>
@@ -52,7 +58,9 @@ export default props => {
                                 <td>{vestido.imagem}</td>
                                 <td>{vestido.nome_vestido}</td>
                                 
-                                <td><button>Alugar</button></td>
+                                <td><button onClick={() => {
+                                    funcMostrarAluguel()
+                                }}>Alugar</button></td>
                             </tr>
                         )
                     })} 

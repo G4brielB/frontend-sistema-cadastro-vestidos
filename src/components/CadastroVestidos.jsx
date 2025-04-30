@@ -71,13 +71,13 @@ export default props => {
                     value={formData.nome_vestido}
                     onChange={handleChange} required/>
 
-                    <label className="input-file">Adicione imagem do vestido
+                    {/*<label className="input-file">Adicione imagem do vestido
                         <input 
                         type="file" 
                         name="imagem" 
                         onChange={handleChange}
                         accept="image/*"/>
-                    </label> 
+                    </label>*/} 
                     <button type="submit" className="cadastrar">Cadastrar</button>
                 </form>
             </div>
