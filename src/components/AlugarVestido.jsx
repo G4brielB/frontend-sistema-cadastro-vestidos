@@ -1,6 +1,7 @@
 import '../styles/AlugarVestido.css'
+import TelaInicial from "./TelaInicial"
 
-export default ({mostrar}, ...props) => {
+export default ({mostrar, vestido}, ...props) => {
 
     const fecharJanela = () => {
         mostrar = null
@@ -15,8 +16,8 @@ export default ({mostrar}, ...props) => {
 
                     <h1>Alugar vestido</h1>
 
-                    <p>Nome do vestido: {}</p>
-                    <p>Codigo do vestido: {}</p>
+                    <p>Nome do vestido: {vestido.nome_vestido}</p>
+                    <p>Codigo do vestido: {vestido.cod_vestido}</p>
 
                     <form className="form-data">
 

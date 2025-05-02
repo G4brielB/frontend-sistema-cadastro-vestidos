@@ -6,13 +6,14 @@ import AlugarVestido from "./AlugarVestido";
 
 
 
-export default props => {
+export default (props) => {
 
 
     const [mostrarAluguel, setMostrarAluguel] = useState(null)
     const [vestidos, setVestidos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [vestidoParaAlugar, setVestidoParaAlugar] = useState(null);
 
     useEffect(() => {
         async function carregarVestidos(){
@@ -28,6 +29,7 @@ export default props => {
         carregarVestidos()
     },[]) 
 
+
     //if (loading) return(<div>Carregando...</div>)
     //if (error) return(<div>Erro: {error}</div>)
 
@@ -37,7 +39,7 @@ export default props => {
 
     return(
         <div>
-            <AlugarVestido mostrar={mostrarAluguel} />
+            <AlugarVestido mostrar={mostrarAluguel} vestido={vestidoParaAlugar} />
             <header>
                 <Link className="link-cadastro" to={"/cadastro-vestidos"}>+ Cadastrar Vestido</Link>
             </header>
@@ -60,6 +62,7 @@ export default props => {
                                 
                                 <td><button onClick={() => {
                                     funcMostrarAluguel()
+                                    setVestidoParaAlugar(vestido)
                                 }}>Alugar</button></td>
                             </tr>
                         )
