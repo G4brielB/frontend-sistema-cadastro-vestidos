@@ -24,32 +24,37 @@ export default ({mostrar, vestido}, ...props) => {
                         <label >
                             Nome cliente: 
                             <input type="text"
-                                    className="input" />
+                                    className="input"
+                                    name="nomeCliente" />
                         </label>
                         <br />
                         <label>
                             Endereço: 
                             <input type="text" 
-                                    className="input"/>
+                                    className="input"
+                                    name="endereco"
+                                    />
                         </label>
                         <br />
                         <label>
                             Telefone:
                             <input type="text" 
-                                    className="input" />
+                                    className="input"
+                                    name="telefone"
+                                    />
                         </label>
                         <label className="label-data">
                         Data de entrega do vestido:
                             <input type="date" 
-                            name="data_entrega"
                             className="input-data input"
+                            name="dataRetirada"
                             />
                         </label>
                         <br />
                         <label className="label-data">
                         Data de devolução do vestido:
                             <input type="date" 
-                            name="data_devolucao"
+                            name="dataDevolucao"
                             className="input-data input"
                             />
                         </label>

@@ -130,6 +130,34 @@ app.get('/vestidos', async (req,res) => {
     }
 })
 
+app.post('/alugueis',async (req, res) => {
+    try{
+        const {nomeCliente, telefone, endereco, dataRetirada, dataDevolucao} = req.body
+
+        if(!nomeCliente) {
+            return res.status(400).json({error: "Dados incompletps"})
+        }
+
+        const [result] = await conexao.query(
+            `INSERT INTO algueis (nome_cliente, telefone, endereco, data_retirada, data_devolucao) VALUES (?, ?, ?, ?, ?)`,
+            [nomeCliente, telefone, endereco, dataRetirada, dataDevolucao]
+        )
+        
+    }catch(erro){
+        res.status(500).json({error: erro.message})
+    }
+})
+
+/*app.get('alugueis', async (req, res) => {
+    try{
+        const [aluguies] = await conexao.query(`
+            SELECT *`)
+
+    }catch(erro){
+        res.status(500).json({error: erro.message})
+    }
+})*/
+
 
 app.listen(port, () => {
     console.log("Servidor rodando em http://localhost:3001")
