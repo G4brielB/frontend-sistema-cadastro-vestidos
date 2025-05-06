@@ -28,5 +28,30 @@ export const buscarDados = async () => {
     }
 }
 
+export const buscarDadosAluguel = async () => {
+    try{
+        const response = await axios.get('http://localhost:3001/alugueis');
+        console.log(response)
+        return response.data.data
+    }catch(erro){
+        console.log('Erro ao listar vestidos: ', erro)
+        throw erro
+    }
+}
+
+export const criarAluguel = (dadosAluguel) => {
+    const formData = new FormData()
+
+    Object.entries(dadosAluguel).forEach(([key, value]) => {
+        formData.append(key, value);
+    })
+
+    return api.post('/alugueis', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
+
 
 export default api;

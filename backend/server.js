@@ -148,15 +148,18 @@ app.post('/alugueis',async (req, res) => {
     }
 })
 
-/*app.get('alugueis', async (req, res) => {
+app.get('/alugueis', async (req, res) => {
     try{
-        const [aluguies] = await conexao.query(`
-            SELECT *`)
+        const [alugueis] = await conexao.query(`
+            SELECT * a.*, i.nome as nome_vestido
+            FROM alugueis a
+            JOIN vestidos v ON a.vestido_id = i.id_vestido`)
+            res.json({data: alugueis});
 
     }catch(erro){
         res.status(500).json({error: erro.message})
     }
-})*/
+})
 
 
 app.listen(port, () => {
