@@ -8,7 +8,7 @@ export  const cadastrarVestido = async (dados) => {
     const formData = new FormData();
     formData.append('cod_vestido', dados.cod_vestido);
     formData.append('nome_vestido', dados.nome_vestido);
-    formData.append('imagem', dados.imagem);
+    //formData.append('imagem', dados.imagem);
 
     await api.post ('vestidos', formData, {
         headers: {
@@ -28,7 +28,7 @@ export const buscarDados = async () => {
     }
 }
 
-export const buscarDadosAluguel = async () => {
+/*export const buscarDadosAluguel = async () => {
     try{
         const response = await axios.get('http://localhost:3001/alugueis');
         console.log(response)
@@ -37,7 +37,7 @@ export const buscarDadosAluguel = async () => {
         console.log('Erro ao listar vestidos: ', erro)
         throw erro
     }
-}
+}*/
 
 export const criarAluguel = (dadosAluguel) => {
     const formData = new FormData()
@@ -46,7 +46,7 @@ export const criarAluguel = (dadosAluguel) => {
         formData.append(key, value);
     })
 
-    return api.post('/alugueis', formData, {
+    return api.post(`/alugueis`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }

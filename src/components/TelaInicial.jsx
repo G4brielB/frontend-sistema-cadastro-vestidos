@@ -37,9 +37,13 @@ export default (props) => {
         setMostrarAluguel(true)
     }
 
+    const funcFecharAluguel = () => {
+        setVestidoParaAlugar(null)
+    }
+
     return(
         <div>
-            <AlugarVestido mostrar={mostrarAluguel} vestido={vestidoParaAlugar} />
+            <AlugarVestido mostrar={mostrarAluguel} vestido={vestidoParaAlugar} onFechar={funcFecharAluguel} />
             <header>
                 <Link className="link-cadastro" to={"/cadastro-vestidos"}>+ Cadastrar Vestido</Link>
             </header>
@@ -47,8 +51,8 @@ export default (props) => {
                 <table>
                     <tr>
                         <th>Codigo do vestido:</th>
-                        <th>imagem:</th>
-                        <th>nome:</th>
+                        <th>Nome:</th>
+                        <th>Alugar:</th>
                         
                     </tr>
 
@@ -57,7 +61,7 @@ export default (props) => {
                         return(
                             <tr Key={vestido.id_vestido}>
                                 <td>{vestido.cod_vestido}</td>
-                                <td>{vestido.imagem}</td>
+                                
                                 <td>{vestido.nome_vestido}</td>
                                 
                                 <td><button onClick={() => {

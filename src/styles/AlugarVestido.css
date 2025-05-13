@@ -40,3 +40,9 @@ button.btn-aluguel{
     font-size: 1.2em;
     cursor: pointer;
 }
+
+div.fechar{
+    position: absolute;
+    font-size: 1.3em;
+    cursor: pointer;
+}

@@ -1,35 +1,38 @@
 import '../styles/AlugarVestido.css'
 import { criarAluguel } from '../api/Api'
-import { useState} from 'react'
+import { useState, useEffect} from 'react'
 
-export default ({mostrar, vestido, onCLose, onAluguelSuccess}, ...props) => {
+export default ({mostrar, vestido, onFechar}, ...props) => {
 
     
+
+
     const [formData, setFormData] = useState({
+        codigo_vestido: '', 
         nomeCliente: '',
         telefone: '',
         endereco: '',
-        data_retirada: '',
-        data_devolucao: ''
+        dataRetirada: '',
+        dataDevolucao: ''
     })
     
+    
 
-    const handleChange = (e) => {
+    const handleChangeAluguel = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmitAluguel = async (e) => {
         e.preventDefault();
 
         try{
             await criarAluguel(formData)
-
             alert("Aluguel registrado com sucesso")
-            onAluguelSuccess();
-            onclose()
+            
+
 
         }catch(erro){
             console.error("Erro ao alugar: ", erro.response?.data || erro.message)
@@ -37,30 +40,48 @@ export default ({mostrar, vestido, onCLose, onAluguelSuccess}, ...props) => {
         }
     }
 
+    console.log(formData)
+   
+
     const fecharJanela = () => {
-        mostrar = null
+        onFechar()
     }
     
     if(!mostrar) return null
 
+    console.log(mostrar)
 
         return(
-            <div className="container">
+            <div className="container" onClick={fecharJanela()}>
                 <div className="janela-flutuante">
+
+                    <div className="fechar" onCLick={fecharJanela()}> X </div>
 
                     <h1>Alugar vestido</h1>
 
-                    <p>Nome do vestido: {vestido.nome_vestido}</p>
-                    <p>Codigo do vestido: {vestido.cod_vestido}</p>
+                    
 
-                    <form className="form-data" onSubmit={handleSubmit}>
+
+                    {/*<p>Nome do vestido: {vestido.nome_vestido} Codigo: {vestido.cod_vestido}</p>*/}
+                    
+
+                    <form className="form-data" onSubmit={handleSubmitAluguel}>
+
+                        <label>
+                            Codigo Vestido: 
+                            <input type="number"
+                                    name="codigo_vestido"
+                                    onChange={handleChangeAluguel}
+                                    className="input"       
+                                    required />
+                        </label>
 
                         <label >
                             Nome cliente: 
                             <input type="text"
                                     className="input"
                                     name="nomeCliente" 
-                                    onChange={handleChange}
+                                    onChange={handleChangeAluguel}
                                     required/>
                         </label>
                         <br />
@@ -69,7 +90,7 @@ export default ({mostrar, vestido, onCLose, onAluguelSuccess}, ...props) => {
                             <input type="text" 
                                     className="input"
                                     name="endereco"
-                                    onChange={handleChange}
+                                    onChange={handleChangeAluguel}
                                     required/>
                         </label>
                         <br />
@@ -78,7 +99,7 @@ export default ({mostrar, vestido, onCLose, onAluguelSuccess}, ...props) => {
                             <input type="text" 
                                     className="input"
                                     name="telefone"
-                                    onChange={handleChange}
+                                    onChange={handleChangeAluguel}
                                     required/>
                         </label>
                         <label className="label-data">
@@ -86,7 +107,7 @@ export default ({mostrar, vestido, onCLose, onAluguelSuccess}, ...props) => {
                             <input type="date" 
                             className="input-data input"
                             name="dataRetirada"
-                            onChange={handleChange}
+                            onChange={handleChangeAluguel}
                             required/>
                         </label>
                         <br />
@@ -95,7 +116,7 @@ export default ({mostrar, vestido, onCLose, onAluguelSuccess}, ...props) => {
                             <input type="date" 
                             name="dataDevolucao"
                             className="input-data input"
-                            onChange={handleChange}
+                            onChange={handleChangeAluguel}
                             required/>
                         </label>
                         <button

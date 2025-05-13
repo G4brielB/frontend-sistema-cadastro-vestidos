@@ -13,17 +13,17 @@ export default props => {
     })
 
     const handleChange = (e) => {
-        if (e.target.name === 'img_vestido') {
+        /*if (e.target.name === 'img_vestido') {
             setFormData({
                 ...formData,
                 imagem: e.target.files[0]
             });
-        }else{
+        }*/
             setFormData({
                 ...formData,
                 [e.target.name]: e.target.value
             });
-        }
+        
     }
 
 
@@ -33,13 +33,13 @@ export default props => {
             await cadastrarVestido({
                 cod_vestido: formData.cod_vestido,
                 nome_vestido: formData.nome_vestido,
-                imagem: formData.imagem
+                //imagem: formData.imagem
             });
             alert('Vestido cadastrado com sucesso!');
             setFormData({
                 cod_vestido: '',
                 nome_vestido: '',
-                imagem: null
+                //imagem: null
             })
         }catch(erro){
             console.error('Erro ao cadastrar vestido: ', erro);

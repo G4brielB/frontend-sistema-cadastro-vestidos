@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -23,17 +23,15 @@ app.use(cors({
     allowedHeaders: ['Content-Type']
 }))
 
-const conexao = mysql.createConnection({
+const conexao = mysql.createPool({
     host: "127.0.0.1",
     user:"root",
     password:"1234",
-    database:"vestido"
+    database:"vestido",
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 })
-
-conexao.connect((erro) => {
-    if(erro) throw erro;
-    console.log("conectado com sucesso!")
-});
 
 
 /*
@@ -50,17 +48,20 @@ const storage = multer.diskStorage({
 const upload = multer ({ storage: storage})
 */
 
-app.post('/vestidos'/*, upload.single('imagem') */, (req, res) => {
+app.post('/vestidos'/*, upload.single('imagem') */,async (req, res) => {
+
+    let connection
 
     try{
+        connection = await conexao.getConnection();
         const { cod_vestido , nome_vestido} = req.body;
-        const imagem = req.files.imagem
+        //const imagem = req.files.imagem
 
         if (!cod_vestido || !nome_vestido) {
             return res.status(400).json({erro: "Codigo e nome são obrigatorios"});
         }
 
-        if(file){
+        /*if(imagem){
             req.files.imagem.mv(__dirname+'../src/imagens/'+req.files.imagem.name);
 
 
@@ -71,9 +72,7 @@ app.post('/vestidos'/*, upload.single('imagem') */, (req, res) => {
         
 
     
-            //let sql = `INSERT INTO vestido.info_vestidos (cod_vestido, nome_vestido, imagem) VALUES ('${cod_vestido}', '${nome_vestido}','${file.filename}')`;
-
-            let sql = `INSERT INTO vestido.info_vestidos (cod_vestido, nome_vestido, imagem) VALUES (?, ?, ?)`;
+            let sql = `INSERT INTO vestido.info_vestidos (cod_vestido, nome_vestido, imagem) VALUES ('${cod_vestido}', '${nome_vestido}','${file.filename}')`;
     
             conexao.query(sql, [cod_vestido, nome_vestido, imagem.name] ,(erro, resultado) => {        
                 if(erro) {
@@ -87,10 +86,10 @@ app.post('/vestidos'/*, upload.single('imagem') */, (req, res) => {
                     imagem: imagem.name
                 });
             })
-        }else{
+        }*/
             let sql = `INSERT INTO vestido.info_vestidos (cod_vestido, nome_vestido) VALUES ('${cod_vestido}', '${nome_vestido}')`;
             
-            conexao.query(sql, (erro, resultado) => {
+            connection.query(sql, (erro, resultado) => {
                 if(erro){
                     console.error("Erro no MySQL: ", erro);
                     return res.status(500).json({ error: "Erro no servidor" });
@@ -102,20 +101,23 @@ app.post('/vestidos'/*, upload.single('imagem') */, (req, res) => {
                 })
             })
 
-        }
+        
 
         }catch(erro){
             console.log('Erro no servidor', erro);
             res.status(500).json({ error: 'Erro interno no servidor' });
 
+        }finally{
+            if(connection) connection.release();
         }
 }) 
 
-const promiseConnection = conexao.promise();
 
 app.get('/vestidos', async (req,res) => {
+    let connection
     try{
-        const [vestidos] = await promiseConnection.query('SELECT * FROM vestido.info_vestidos');
+        connection = await conexao.getConnection();
+        const [vestidos] = await connection.query('SELECT * FROM vestido.info_vestidos');
 
         res.json({
             success: true,
@@ -127,30 +129,38 @@ app.get('/vestidos', async (req,res) => {
             success: false,
             message: 'Erro ao buscar vestidos'
         })
+    }finally{
+        if(connection) connection.release();
     }
 })
 
 app.post('/alugueis',async (req, res) => {
+    let connection
     try{
-        const {nomeCliente, telefone, endereco, dataRetirada, dataDevolucao} = req.body
+        connection = await conexao.getConnection();
+        const {codigo_vestido, nomeCliente, telefone, endereco, dataRetirada, dataDevolucao} = req.body
 
         if(!nomeCliente) {
-            return res.status(400).json({error: "Dados incompletps"})
+            return res.status(400).json({error: "Dados incompletos"})
         }
 
-        const [result] = await conexao.query(
-            `INSERT INTO algueis (nome_cliente, telefone, endereco, data_retirada, data_devolucao) VALUES (?, ?, ?, ?, ?)`,
-            [nomeCliente, telefone, endereco, dataRetirada, dataDevolucao]
+        const [result] = await connection.query(
+            `INSERT INTO alugueis (codigo_vestido, nome_cliente, telefone, endereco, data_retirada, data_devolucao) VALUES (?, ?, ?, ?, ?, ?)`,
+            [codigo_vestido ,nomeCliente, telefone, endereco, dataRetirada, dataDevolucao]
         )
         
     }catch(erro){
         res.status(500).json({error: erro.message})
+    }finally{
+        if(connection) connection.release();
     }
 })
 
 app.get('/alugueis', async (req, res) => {
+    let connection
     try{
-        const [alugueis] = await conexao.query(`
+        connection = await conexao.getConnection();
+        const [alugueis] = await connection.query(`
             SELECT * a.*, i.nome as nome_vestido
             FROM alugueis a
             JOIN vestidos v ON a.vestido_id = i.id_vestido`)
@@ -158,6 +168,8 @@ app.get('/alugueis', async (req, res) => {
 
     }catch(erro){
         res.status(500).json({error: erro.message})
+    }finally{
+        if(connection) connection.release();
     }
 })
 
