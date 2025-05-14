@@ -5,9 +5,13 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fileUpload from 'express-fileupload'
+import os from 'os'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname =  path.dirname(__filename)
+
+const networkInfo = os.networkInterfaces();
+const ip = networkInfo.lo[0].address
 
 
 const port = 3001;
@@ -18,10 +22,11 @@ app.use(fileUpload())
 app.use('/images', express.static(path.join(__dirname, '/images')))
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: `http://localhost:3000`,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type']
 }))
+
 
 const conexao = mysql.createPool({
     host: "127.0.0.1",
@@ -148,6 +153,10 @@ app.post('/alugueis',async (req, res) => {
             `INSERT INTO alugueis (codigo_vestido, nome_cliente, telefone, endereco, data_retirada, data_devolucao) VALUES (?, ?, ?, ?, ?, ?)`,
             [codigo_vestido ,nomeCliente, telefone, endereco, dataRetirada, dataDevolucao]
         )
+        res.status(200).json({
+                success: true,
+                message: "Aluguel registrado com sucesso"
+            })
         
     }catch(erro){
         res.status(500).json({error: erro.message})

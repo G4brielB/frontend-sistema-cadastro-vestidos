@@ -37,13 +37,13 @@ export default (props) => {
         setMostrarAluguel(true)
     }
 
-    const funcFecharAluguel = () => {
-        setVestidoParaAlugar(null)
+    const fecharModal = () => {
+        setMostrarAluguel(null)
     }
 
     return(
         <div>
-            <AlugarVestido mostrar={mostrarAluguel} vestido={vestidoParaAlugar} onFechar={funcFecharAluguel} />
+            <AlugarVestido mostrar={mostrarAluguel} vestido={vestidoParaAlugar} onFechar={fecharModal} />
             <header>
                 <Link className="link-cadastro" to={"/cadastro-vestidos"}>+ Cadastrar Vestido</Link>
             </header>

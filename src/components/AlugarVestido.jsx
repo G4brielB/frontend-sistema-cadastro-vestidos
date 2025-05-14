@@ -4,7 +4,10 @@ import { useState, useEffect} from 'react'
 
 export default ({mostrar, vestido, onFechar}, ...props) => {
 
-    
+    const fecharModal = (e) => {
+        e.stopPropagation();
+        onFechar()
+    }
 
 
     const [formData, setFormData] = useState({
@@ -15,6 +18,15 @@ export default ({mostrar, vestido, onFechar}, ...props) => {
         dataRetirada: '',
         dataDevolucao: ''
     })
+
+    useEffect(() => {
+        if(vestido) {
+            setFormData(prev => ({
+                ...prev,
+                codigo_vestido: vestido.cod_vestido
+            }))
+        }
+    },[vestido])
     
     
 
@@ -29,10 +41,15 @@ export default ({mostrar, vestido, onFechar}, ...props) => {
         e.preventDefault();
 
         try{
-            await criarAluguel(formData)
-            alert("Aluguel registrado com sucesso")
-            
+            alert('Processando aluguel')
+            const response = await criarAluguel(formData)
+            if(response && response.status === 200) {
 
+                alert("Aluguel registrado com sucesso")
+                onFechar();
+            }else {
+                alert("O aluguel foi processado, mas não recebemos confirmação")
+            }
 
         }catch(erro){
             console.error("Erro ao alugar: ", erro.response?.data || erro.message)
@@ -40,29 +57,21 @@ export default ({mostrar, vestido, onFechar}, ...props) => {
         }
     }
 
-    console.log(formData)
-   
-
-    const fecharJanela = () => {
-        onFechar()
-    }
-    
     if(!mostrar) return null
 
-    console.log(mostrar)
 
         return(
-            <div className="container" onClick={fecharJanela()}>
+            <div className="container" >
                 <div className="janela-flutuante">
 
-                    <div className="fechar" onCLick={fecharJanela()}> X </div>
+                    <div className="fechar" onClick={fecharModal}> X </div>
 
                     <h1>Alugar vestido</h1>
 
                     
 
 
-                    {/*<p>Nome do vestido: {vestido.nome_vestido} Codigo: {vestido.cod_vestido}</p>*/}
+                    <p>Nome do vestido: {vestido.nome_vestido} Codigo: {vestido.cod_vestido}</p>
                     
 
                     <form className="form-data" onSubmit={handleSubmitAluguel}>
@@ -72,8 +81,10 @@ export default ({mostrar, vestido, onFechar}, ...props) => {
                             <input type="number"
                                     name="codigo_vestido"
                                     onChange={handleChangeAluguel}
-                                    className="input"       
-                                    required />
+                                    className="input"
+                                    value={vestido.cod_vestido}       
+                                    required
+                                    disabled />
                         </label>
 
                         <label >
@@ -122,7 +133,6 @@ export default ({mostrar, vestido, onFechar}, ...props) => {
                         <button
                             type="submit" 
                             className="btn-aluguel"
-                            onClick={fecharJanela()}
                             >Alugar</button>
                     </form>
 
