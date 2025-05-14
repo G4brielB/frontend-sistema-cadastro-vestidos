@@ -1,45 +1,37 @@
-# Getting Started with Create React App
+# Iniciando App React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Inicialmente no projeto foi utilizado o banco de dados mysql, pode ser usado tanto o mysql workbench ou o dbeaver como inferface da tabela, inicialmente ainda não estou disponibilizando arquivo para configuração de Banco de dados.
+No Banco de dados é usada um schema chamado vestido, com acesso root e senha 1234 (provisório), podendo ser modificado na área de conexão ao banco de dados no arquivo ‘server.js’ localizado em ‘backend/’.
+Dentro do Schema vestido tem duas tabelas: alugueis com as seguintes colunas, id, código_vestido, nome_cliente, telefone, endereço, data_retirada, data_devolucão. E info_vestidos com as seguintes colunas: id_vestido, cod_vestido, nome_vestido.
 
-## Available Scripts
+## Scripts para o react
 
-In the project directory, you can run:
+No diretorio do projeto, use esses scripts.
 
 ### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Roda o app em modo de desenvolvedor.
+Ele é aberto no http://localhost:3000 no seu navegador.
 
-### `npm test`
+### `npm run build`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Cria o app para produção na pasta /build
+Um aplicativo com otimizações e melhor performance.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### `npm run server`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+É iniciado o servidor do app, com ele você tem acesso banco de dados, podendo adicionar e ver os vestidos e alugueis
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
