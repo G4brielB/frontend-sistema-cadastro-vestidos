@@ -6,6 +6,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fileUpload from 'express-fileupload'
 import os from 'os'
+import { createPool } from 'mysql2';
+import { connect } from 'http2';
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname =  path.dirname(__filename)
@@ -139,6 +141,42 @@ app.get('/vestidos', async (req,res) => {
     }
 })
 
+app.delete('/vestidos/:id', async (req, res) => {
+    let connection
+    try{
+        connection = await conexao.getConnection();
+        await connection.beginTransaction()
+
+        const { id } = req.params
+
+        const [vestido] = await connection.query(
+            'SELECT * FROM vestido.info_vestidos WHERE id_vestido = ?', [id]
+        )
+
+        if(!vestido.length === 0) {
+            await connection.rollback()
+            return res.status(404).json({error: "Vestido não encontrado"})
+        }
+
+        await connection.query(
+            'DELETE FROM vestido.info_vestidos WHERE id_vestido = ?', [id]
+        )
+
+        await connection.commit();
+        res.status(200).json({success: true})
+
+    }catch(erro){
+        await connection.rollback()
+        console.error('Erro ao deletar vestido: ', erro)
+        res.status(500).json({
+            error: 'Erro ao deletar vestido',
+            details: erro.message
+        })
+    }finally{
+        connection.release()
+    }
+})
+
 app.post('/alugueis',async (req, res) => {
     let connection
     try{
@@ -170,9 +208,7 @@ app.get('/alugueis', async (req, res) => {
     try{
         connection = await conexao.getConnection();
         const [alugueis] = await connection.query(`
-            SELECT * a.*, i.nome as nome_vestido
-            FROM alugueis a
-            JOIN vestidos v ON a.vestido_id = i.id_vestido`)
+            SELECT * FROM vestido.alugueis`)
             res.json({data: alugueis});
 
     }catch(erro){

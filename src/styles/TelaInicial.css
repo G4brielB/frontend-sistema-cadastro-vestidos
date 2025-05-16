@@ -33,7 +33,15 @@ th{
 }
 
 td{
-    background-color: #ddd;
+    background-color: #fff4f4;
     padding: 10px;
     font-size: 1.0em;
+}
+
+.alugar-btn{
+    border: solid 2px #ffb4b4;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 5px 10px;
+    font-size: 0.9em;
 }

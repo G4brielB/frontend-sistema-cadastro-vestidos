@@ -46,3 +46,7 @@ div.fechar{
     font-size: 1.3em;
     cursor: pointer;
 }
+
+svg{
+    cursor: pointer;
+}

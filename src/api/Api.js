@@ -27,16 +27,24 @@ export const buscarDados = async () => {
     }
 }
 
-/*export const buscarDadosAluguel = async () => {
+export const deletarVestido = (id) => {
+    try{
+        const response = api.delete(`/vestidos/${id}`)
+        return response.data
+    }catch(erro){
+        throw new Error(erro.response?.data?.error) || 'Falha na comunicação com o servidor'
+    }
+}
+
+export const buscarDadosAluguel = async () => {
     try{
         const response = await axios.get('http://localhost:3001/alugueis');
-        console.log(response)
         return response.data.data
     }catch(erro){
         console.log('Erro ao listar vestidos: ', erro)
         throw erro
     }
-}*/
+}
 
 export const criarAluguel = (dadosAluguel) => {
     const formData = new FormData()
