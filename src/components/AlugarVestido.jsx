@@ -73,6 +73,8 @@ export default ({mostrar, vestido, onFechar}, ...props) => {
 
                     <p>Nome do vestido: {vestido.nome_vestido} Codigo: {vestido.cod_vestido}</p>
                     
+                    {/*Pasta image dentro da pasta public*/}
+                    <img src={`/images/${vestido.cod_vestido}.jpeg`} width="100" />
 
                     <form className="form-data" onSubmit={handleSubmitAluguel}>
 

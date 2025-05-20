@@ -12,8 +12,6 @@ import { connect } from 'http2';
 const __filename = fileURLToPath(import.meta.url)
 const __dirname =  path.dirname(__filename)
 
-const networkInfo = os.networkInterfaces();
-const ip = networkInfo.lo[0].address
 
 
 const port = 3001;
@@ -94,19 +92,15 @@ app.post('/vestidos'/*, upload.single('imagem') */,async (req, res) => {
                 });
             })
         }*/
-            let sql = `INSERT INTO vestido.info_vestidos (cod_vestido, nome_vestido) VALUES ('${cod_vestido}', '${nome_vestido}')`;
+            let sql = `INSERT INTO vestido.info_vestidos (cod_vestido, nome_vestido) VALUES (?, ?)`;
             
-            connection.query(sql, (erro, resultado) => {
-                if(erro){
-                    console.error("Erro no MySQL: ", erro);
-                    return res.status(500).json({ error: "Erro no servidor" });
-                }
+            let [result] = await connection.query(sql, [cod_vestido, nome_vestido])
 
-                res.status(201).json({
+            res.status(201).json({
                     success: true,
-                    id: resultado.insertId
+                    id: result.insertId
                 })
-            })
+            
 
         
 

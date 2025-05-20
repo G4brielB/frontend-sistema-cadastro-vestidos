@@ -20,10 +20,17 @@ header{
     border-radius: 30px;
 }
 
+.container-vestidos{
+    height: 40vh;
+    overflow-y: auto;
+    
+}
+
 table{
     width: 100%;
     border: solid 2px #ffb4b4;
     padding: 20px;
+    background-color: #f3f3f3;
 }
 
 th{

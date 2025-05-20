@@ -57,7 +57,7 @@ export default props => {
 
                     <input
                     className="input" 
-                    type="number" 
+                    type="text" 
                     name="cod_vestido" 
                     placeholder="digite o codigo do vestido"
                     value={formData.cod_vestido}

@@ -72,7 +72,7 @@ export default (props) => {
             <header>
                 <Link className="link-cadastro" to={"/cadastro-vestidos"}>+ Cadastrar Vestido</Link>
             </header>
-            <section>
+            <section class="container-vestidos">
                 <table>
                     <tr>
                         <th>Codigo do vestido:</th>

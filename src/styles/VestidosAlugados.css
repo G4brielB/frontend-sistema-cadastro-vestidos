@@ -1,8 +1,10 @@
 .card{
     display: flex;
+    flex-direction: column-reverse;
     width: 100vw;
     flex-wrap: wrap;
     justify-content: space-around;
+    padding: 20px;
     
 }
 

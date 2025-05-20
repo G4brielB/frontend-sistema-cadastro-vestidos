@@ -15,6 +15,7 @@ div.janela-flutuante{
     border: solid 2px #000 ;
     padding: 20px;
     font-size: 1.5em;
+    overflow-y: auto;
 }
 
 form.form-data{
